@@ -1,0 +1,7 @@
+<!-- C21361681 – Michael Traynor
+     Green outlined rounded card -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/radius_md"/>
+    <stroke android:width="2dp" android:color="@color/giggy_green"/>
+    <solid android:color="@color/giggy_card"/>
+</shape>

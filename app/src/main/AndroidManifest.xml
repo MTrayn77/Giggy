@@ -1,0 +1,24 @@
+<!-- C21361681 – Michael Traynor
+     AndroidManifest.xml – Declares activities and launcher -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fyp.giggy">
+
+    <application
+        android:allowBackup="true"
+        android:label="Giggy"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.Giggy.Dark">
+        <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.SignupActivity" />
+        <activity android:name=".ui.RoleSelectActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

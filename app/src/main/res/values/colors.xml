@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="giggy_black">#0B0B0B</color>
+    <color name="giggy_dark">#141414</color>
+    <color name="giggy_card">#101010</color>
+    <color name="giggy_green">#12E05C</color>
+    <color name="giggy_green_dim">#0EBF4D</color>
+    <color name="giggy_grey">#2A2A2A</color>
+    <color name="giggy_text">#FFFFFF</color>
+    <color name="giggy_hint">#9AA0A6</color>
+</resources>

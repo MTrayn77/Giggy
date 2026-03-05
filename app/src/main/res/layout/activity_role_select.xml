@@ -1,0 +1,54 @@
+<!-- C21361681 – Michael Traynor
+     Choose Artist or Venue -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/giggy_black">
+
+    <include layout="@layout/include_topbar_back" />
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <include layout="@layout/include_logo" />
+        <Space android:layout_width="0dp" android:layout_height="20dp"/>
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/join_giggy" android:textSize="22sp"
+            android:textColor="@color/giggy_text"/>
+
+        <Space android:layout_width="0dp" android:layout_height="24dp"/>
+
+        <LinearLayout
+            android:id="@+id/cardArtist"
+            android:layout_width="match_parent" android:layout_height="110dp"
+            android:background="@drawable/card" android:orientation="vertical"
+            android:gravity="center" android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/register_artist" android:textStyle="bold"
+                android:textColor="@color/giggy_text" android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/find_gigs" android:textColor="@color/giggy_hint"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <Space android:layout_width="0dp" android:layout_height="16dp"/>
+
+        <LinearLayout
+            android:id="@+id/cardVenue"
+            android:layout_width="match_parent" android:layout_height="110dp"
+            android:background="@drawable/card" android:orientation="vertical"
+            android:gravity="center" android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/register_venue" android:textStyle="bold"
+                android:textColor="@color/giggy_text" android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/book_artists" android:textColor="@color/giggy_hint"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

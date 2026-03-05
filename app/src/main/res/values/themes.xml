@@ -1,0 +1,12 @@
+<!-- C21361681 – Michael Traynor
+     themes.xml – Material dark theme -->
+<resources>
+    <style name="Theme.Giggy.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/giggy_green</item>
+        <item name="colorOnPrimary">@color/giggy_black</item>
+        <item name="android:statusBarColor">@color/giggy_black</item>
+        <item name="android:navigationBarColor">@color/giggy_black</item>
+        <item name="android:windowBackground">@color/giggy_black</item>
+        <item name="android:textColor">@color/giggy_text</item>
+    </style>
+</resources>

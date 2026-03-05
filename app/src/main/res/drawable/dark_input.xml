@@ -1,0 +1,6 @@
+<!-- C21361681 – Michael Traynor
+     Rounded dark input background -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/radius_md"/>
+    <solid android:color="@color/giggy_grey"/>
+</shape>

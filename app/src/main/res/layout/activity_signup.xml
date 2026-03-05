@@ -1,0 +1,75 @@
+<!-- C21361681 – Michael Traynor
+     Role-aware sign up -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/giggy_black">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_topbar_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:padding="24dp" android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <include layout="@layout/include_logo" />
+
+            <Space android:layout_width="0dp" android:layout_height="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/join_giggy" android:textSize="22sp"
+                android:textColor="@color/giggy_text"/>
+
+            <Space android:layout_width="0dp" android:layout_height="16dp"/>
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:autofillHints=""
+                android:hint="@string/artist_name" android:textColorHint="@color/giggy_hint"
+                android:textColor="@color/giggy_text" android:padding="14dp"
+                android:background="@drawable/dark_input"
+                android:inputType="textPersonName"/>
+
+            <Space android:layout_width="0dp" android:layout_height="12dp"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:autofillHints=""
+                android:hint="@string/email" android:textColorHint="@color/giggy_hint"
+                android:textColor="@color/giggy_text" android:padding="14dp"
+                android:background="@drawable/dark_input" android:inputType="textEmailAddress"/>
+
+            <Space android:layout_width="0dp" android:layout_height="12dp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:autofillHints=""
+                android:hint="@string/password" android:textColorHint="@color/giggy_hint"
+                android:textColor="@color/giggy_text" android:padding="14dp"
+                android:background="@drawable/dark_input" android:inputType="textPassword"/>
+
+            <Space android:layout_width="0dp" android:layout_height="20dp"/>
+
+            <Button
+                android:id="@+id/btnCreate"
+                android:layout_width="match_parent" android:layout_height="56dp"
+                android:text="@string/create_account" android:textStyle="bold"
+                android:textColor="@color/giggy_black" android:background="@drawable/green_button"
+                app:backgroundTint="@null"/>
+
+            <TextView
+                android:id="@+id/tvChangeRole"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/change_account_type"
+                android:textColor="@color/giggy_green" android:layout_marginTop="12dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
