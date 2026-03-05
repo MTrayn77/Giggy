@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Layout for Venue profile create/edit screen -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/giggy_black"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Venue Profile"
+            android:textColor="@color/giggy_text"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Artists will see this when browsing available gigs."
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Venue Name -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Venue Name *"/>
+        <EditText
+            android:id="@+id/etVenueName"
+            style="@style/GiggyEditText"
+            android:hint="e.g. The Rusty Nail"
+            android:inputType="textCapWords"
+            android:imeOptions="actionNext"/>
+
+        <!-- Venue Type Spinner -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Venue Type *"/>
+        <Spinner
+            android:id="@+id/spinnerVenueType"
+            style="@style/GiggySpinner"/>
+
+        <!-- Location -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Address / Location *"/>
+        <EditText
+            android:id="@+id/etLocation"
+            style="@style/GiggyEditText"
+            android:hint="e.g. 12 Main St, Dublin"
+            android:inputType="textPostalAddress"
+            android:imeOptions="actionNext"/>
+
+        <!-- Capacity -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Capacity (approx.)"/>
+        <EditText
+            android:id="@+id/etCapacity"
+            style="@style/GiggyEditText"
+            android:hint="e.g. 80"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
+
+        <!-- Description -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Description"/>
+        <EditText
+            android:id="@+id/etDescription"
+            style="@style/GiggyEditText"
+            android:hint="Tell artists about your venue and what kind of acts you book..."
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:maxLines="6"
+            android:gravity="top"
+            android:minHeight="100dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact &amp; Links (optional)"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Phone -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Phone Number"/>
+        <EditText
+            android:id="@+id/etPhone"
+            style="@style/GiggyEditText"
+            android:hint="+353 1 234 5678"
+            android:inputType="phone"
+            android:imeOptions="actionNext"/>
+
+        <!-- Website -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Website"/>
+        <EditText
+            android:id="@+id/etWebsite"
+            style="@style/GiggyEditText"
+            android:hint="https://yourvenue.ie"
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- Instagram -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Instagram URL"/>
+        <EditText
+            android:id="@+id/etInstagram"
+            style="@style/GiggyEditText"
+            android:hint="https://instagram.com/..."
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- Facebook -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Facebook URL"/>
+        <EditText
+            android:id="@+id/etFacebook"
+            style="@style/GiggyEditText"
+            android:hint="https://facebook.com/..."
+            android:inputType="textUri"
+            android:imeOptions="actionDone"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Save Profile"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/giggy_black"
+            android:backgroundTint="@color/giggy_green"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

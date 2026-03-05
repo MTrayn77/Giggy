@@ -1,6 +1,7 @@
 <!-- C21361681 – Michael Traynor
-     themes.xml – Material dark theme -->
+     themes.xml – Material dark theme + Sprint 2 profile screen styles -->
 <resources>
+
     <style name="Theme.Giggy.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/giggy_green</item>
         <item name="colorOnPrimary">@color/giggy_black</item>
@@ -9,4 +10,36 @@
         <item name="android:windowBackground">@color/giggy_black</item>
         <item name="android:textColor">@color/giggy_text</item>
     </style>
+
+    <!-- Sprint 2: field label above each input -->
+    <style name="GiggyFieldLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <!-- Sprint 2: shared EditText style matching Sprint 1 inputs -->
+    <style name="GiggyEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/giggy_text</item>
+        <item name="android:textColorHint">@color/giggy_hint</item>
+        <item name="android:background">@drawable/dark_input</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Sprint 2: spinner styled to match EditText fields -->
+    <style name="GiggySpinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/dark_input</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:popupBackground">@color/giggy_dark</item>
+    </style>
+
 </resources>

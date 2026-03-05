@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Layout for Artist EPK profile create/edit screen -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/giggy_black"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Artist Profile"
+            android:textColor="@color/giggy_text"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Build your EPK — venues will use this to find and book you."
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="28dp"/>
+
+        <!-- Stage Name -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Stage Name *"/>
+        <EditText
+            android:id="@+id/etStageName"
+            style="@style/GiggyEditText"
+            android:hint="e.g. The Midnight Rovers"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"/>
+
+        <!-- Genre Spinner -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Genre *"/>
+        <Spinner
+            android:id="@+id/spinnerGenre"
+            style="@style/GiggySpinner"/>
+
+        <!-- Act Type Spinner -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Act Type *"/>
+        <Spinner
+            android:id="@+id/spinnerActType"
+            style="@style/GiggySpinner"/>
+
+        <!-- Location -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Location *"/>
+        <EditText
+            android:id="@+id/etLocation"
+            style="@style/GiggyEditText"
+            android:hint="e.g. Dublin, Cork, Galway"
+            android:inputType="textPostalAddress"
+            android:imeOptions="actionNext"/>
+
+        <!-- Bio -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Bio"/>
+        <EditText
+            android:id="@+id/etBio"
+            style="@style/GiggyEditText"
+            android:hint="Tell venues a bit about your act..."
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:maxLines="6"
+            android:gravity="top"
+            android:minHeight="100dp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#333333"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Social &amp; Links (optional)"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Spotify -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Spotify URL"/>
+        <EditText
+            android:id="@+id/etSpotify"
+            style="@style/GiggyEditText"
+            android:hint="https://open.spotify.com/artist/..."
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- Instagram -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Instagram URL"/>
+        <EditText
+            android:id="@+id/etInstagram"
+            style="@style/GiggyEditText"
+            android:hint="https://instagram.com/..."
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- Facebook -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Facebook URL"/>
+        <EditText
+            android:id="@+id/etFacebook"
+            style="@style/GiggyEditText"
+            android:hint="https://facebook.com/..."
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- YouTube -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="YouTube URL"/>
+        <EditText
+            android:id="@+id/etYoutube"
+            style="@style/GiggyEditText"
+            android:hint="https://youtube.com/..."
+            android:inputType="textUri"
+            android:imeOptions="actionNext"/>
+
+        <!-- Website -->
+        <TextView
+            style="@style/GiggyFieldLabel"
+            android:text="Website"/>
+        <EditText
+            android:id="@+id/etWebsite"
+            style="@style/GiggyEditText"
+            android:hint="https://yourwebsite.com"
+            android:inputType="textUri"
+            android:imeOptions="actionDone"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Save Profile"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/giggy_black"
+            android:backgroundTint="@color/giggy_green"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

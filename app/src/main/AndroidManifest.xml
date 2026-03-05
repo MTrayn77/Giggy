@@ -1,5 +1,6 @@
 <!-- C21361681 – Michael Traynor
-     AndroidManifest.xml – Declares activities and launcher -->
+     AndroidManifest.xml – Declares activities and launcher
+     Sprint 2 update: added EditArtistProfileActivity and EditVenueProfileActivity -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fyp.giggy">
 
@@ -9,10 +10,20 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.Giggy.Dark">
+
         <activity android:name=".ui.HomeActivity" />
         <activity android:name=".ui.SignupActivity" />
         <activity android:name=".ui.RoleSelectActivity" />
         <activity android:name=".ui.LoginActivity" />
+
+        <!-- Sprint 2: Profile setup/edit screens -->
+        <activity
+            android:name=".ui.EditArtistProfileActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.EditVenueProfileActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -20,5 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 </manifest>
