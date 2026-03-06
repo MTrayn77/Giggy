@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             btnBrowseGigs.setOnClickListener(v ->
                     startActivity(new Intent(this, BrowseGigsActivity.class)));
             btnSearchArtists.setOnClickListener(v ->
-                    startActivity(new Intent(this, SearchArtistsActivity.class)));
+                    startActivity(new Intent(this, SearchVenuesActivity.class)));
             btnBookings.setOnClickListener(v ->
                     startActivity(new Intent(this, MyBookingsActivity.class)));
         }

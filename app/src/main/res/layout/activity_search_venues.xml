@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- C21361681 – Michael Traynor -->
-<!-- Layout for venues searching for artists – matches activity_search_venues.xml structure -->
+<!-- Artist: browse and search venue profiles -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,17 +19,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Find Artists"
+        android:text="Find Venues"
         android:textColor="@color/giggy_text"
         android:textSize="26sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Genre filter -->
+    <!-- Venue type filter -->
     <TextView
         style="@style/GiggyFieldLabel"
-        android:text="Genre"/>
-    <Spinner android:id="@+id/spGenreFilter"
+        android:text="Venue Type"/>
+    <Spinner android:id="@+id/spVenueTypeFilter"
         style="@style/GiggySpinner"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -55,7 +55,7 @@
         android:background="@drawable/green_button"
         android:layout_marginBottom="16dp"/>
 
-    <ListView android:id="@+id/listArtists"
+    <ListView android:id="@+id/listVenues"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

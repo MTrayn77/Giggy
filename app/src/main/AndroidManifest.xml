@@ -42,6 +42,7 @@
         <activity android:name=".ui.MyBookingsActivity"/>
         <activity android:name=".ui.VenueBookingsActivity"/>
         <activity android:name=".ui.BookingDetailActivity"/>
+        <activity android:name=".ui.SearchVenuesActivity"/>
 
     </application>
 </manifest>
