@@ -1,6 +1,6 @@
 // C21361681 – Michael Traynor
 // HomeActivity.java – Role-aware dashboard
-// Sprint 4 update: added My Bookings (artist) and Booking Requests (venue) buttons
+// Sprint 4 update: booking buttons added, layout IDs updated to match activity_home.xml
 
 package com.fyp.giggy.ui;
 
@@ -25,64 +25,59 @@ public class HomeActivity extends AppCompatActivity {
         SessionManager session = new SessionManager(this);
         String role = session.getRole();
         String name = session.getUsername();
+
         if (name == null) name = getIntent().getStringExtra("name");
         if (role == null) role = getIntent().getStringExtra("role");
         if (name == null) name = "Giggy User";
         if (role == null) role = "artist";
 
-        TextView tvWelcome       = findViewById(R.id.tvWelcome);
-        TextView tvRole          = findViewById(R.id.tvRole);
-        Button btnAction         = findViewById(R.id.btnPrimaryAction);
-        Button btnSecondary      = findViewById(R.id.btnSecondaryAction);
-        Button btnMyProfile      = findViewById(R.id.btnMyProfile);
-        Button btnBookings       = findViewById(R.id.btnBookings);
-        Button btnLogout         = findViewById(R.id.btnLogout);
+        TextView tvUsername     = findViewById(R.id.tvUsername);
+        TextView tvRole         = findViewById(R.id.tvRole);
+        Button btnMyProfile     = findViewById(R.id.btnMyProfile);
+        Button btnLogout        = findViewById(R.id.btnLogout);
 
-        tvWelcome.setText(name);
-        tvRole.setText(role.equals("venue") ? "Venue Account" : "Artist Account");
+        // Artist buttons
+        Button btnBrowseGigs    = findViewById(R.id.btnBrowseGigs);
+        Button btnSearchArtists = findViewById(R.id.btnSearchArtists);
+        Button btnBookings      = findViewById(R.id.btnBookings);
 
-        final String finalRole = role;
+        // Venue buttons
+        Button btnPostGig       = findViewById(R.id.btnPostGig);
+        Button btnFindArtists   = findViewById(R.id.btnFindArtists);
+        Button btnVenueBookings = findViewById(R.id.btnVenueBookings);
+
+        tvUsername.setText(name);
 
         if ("venue".equals(role)) {
-            btnAction.setText("Post a Gig");
-            btnSecondary.setText("Find Artists");
-            btnSecondary.setVisibility(View.VISIBLE);
-            btnBookings.setText("Booking Requests");
+            tvRole.setText("Venue Account");
+            btnPostGig.setVisibility(View.VISIBLE);
+            btnFindArtists.setVisibility(View.VISIBLE);
+            btnVenueBookings.setVisibility(View.VISIBLE);
+
+            btnMyProfile.setOnClickListener(v ->
+                    startActivity(new Intent(this, ViewVenueProfileActivity.class)));
+            btnPostGig.setOnClickListener(v ->
+                    startActivity(new Intent(this, PostGigActivity.class)));
+            btnFindArtists.setOnClickListener(v ->
+                    startActivity(new Intent(this, SearchArtistsActivity.class)));
+            btnVenueBookings.setOnClickListener(v ->
+                    startActivity(new Intent(this, VenueBookingsActivity.class)));
+
         } else {
-            btnAction.setText("Browse Gigs");
-            btnSecondary.setVisibility(View.GONE);
-            btnBookings.setText("My Applications");
+            tvRole.setText("Artist Account");
+            btnBrowseGigs.setVisibility(View.VISIBLE);
+            btnSearchArtists.setVisibility(View.VISIBLE);
+            btnBookings.setVisibility(View.VISIBLE);
+
+            btnMyProfile.setOnClickListener(v ->
+                    startActivity(new Intent(this, ViewArtistProfileActivity.class)));
+            btnBrowseGigs.setOnClickListener(v ->
+                    startActivity(new Intent(this, BrowseGigsActivity.class)));
+            btnSearchArtists.setOnClickListener(v ->
+                    startActivity(new Intent(this, SearchArtistsActivity.class)));
+            btnBookings.setOnClickListener(v ->
+                    startActivity(new Intent(this, MyBookingsActivity.class)));
         }
-
-        btnAction.setOnClickListener(v -> {
-            if ("venue".equals(finalRole)) {
-                startActivity(new Intent(this, PostGigActivity.class));
-            } else {
-                startActivity(new Intent(this, BrowseGigsActivity.class));
-            }
-        });
-
-        btnSecondary.setOnClickListener(v ->
-                startActivity(new Intent(this, SearchArtistsActivity.class))
-        );
-
-        btnBookings.setOnClickListener(v -> {
-            if ("venue".equals(finalRole)) {
-                startActivity(new Intent(this, VenueBookingsActivity.class));
-            } else {
-                startActivity(new Intent(this, MyBookingsActivity.class));
-            }
-        });
-
-        btnMyProfile.setOnClickListener(v -> {
-            Intent i;
-            if ("venue".equals(finalRole)) {
-                i = new Intent(this, ViewVenueProfileActivity.class);
-            } else {
-                i = new Intent(this, ViewArtistProfileActivity.class);
-            }
-            startActivity(i);
-        });
 
         btnLogout.setOnClickListener(v -> {
             session.clearSession();
