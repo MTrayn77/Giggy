@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Layout for venues searching for artists -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/giggy_black"
+    android:padding="16dp">
+
+    <Button android:id="@+id/btnBack"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="← Back" android:textColor="@color/giggy_hint"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Find Artists" android:textColor="@color/giggy_text"
+        android:textSize="24sp" android:textStyle="bold"
+        android:layout_marginTop="4dp" android:layout_marginBottom="16dp"/>
+
+    <!-- Filters -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginBottom="8dp">
+
+        <EditText android:id="@+id/etLocationFilter"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:hint="Location"
+            android:textColor="@color/giggy_text" android:textColorHint="@color/giggy_hint"
+            android:background="@drawable/dark_input" android:padding="10dp"
+            android:textSize="14sp" android:layout_marginEnd="8dp"/>
+
+        <Spinner android:id="@+id/spGenreFilter"
+            android:layout_width="0dp" android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/dark_input"
+            android:paddingStart="10dp" android:paddingEnd="10dp"
+            android:popupBackground="@color/giggy_dark"/>
+    </LinearLayout>
+
+    <Button android:id="@+id/btnSearch"
+        android:layout_width="match_parent" android:layout_height="48dp"
+        android:text="Search" android:textColor="@color/giggy_black"
+        android:background="@drawable/green_button"
+        app:backgroundTint="@null"
+        android:layout_marginBottom="16dp"/>
+
+    <ListView android:id="@+id/listArtists"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#1A1A1A" android:dividerHeight="1dp"/>
+
+</LinearLayout>

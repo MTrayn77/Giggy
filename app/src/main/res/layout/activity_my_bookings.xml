@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Artist: view all booking applications and their statuses -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/giggy_black"
+    android:padding="16dp">
+
+    <Button android:id="@+id/btnBack"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="← Back" android:textColor="@color/giggy_hint"/>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="My Applications" android:textColor="@color/giggy_text"
+        android:textSize="24sp" android:textStyle="bold"
+        android:layout_marginTop="4dp" android:layout_marginBottom="16dp"/>
+
+    <ListView android:id="@+id/listBookings"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#1A1A1A" android:dividerHeight="1dp"/>
+
+</LinearLayout>

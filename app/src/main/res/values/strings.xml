@@ -17,4 +17,33 @@
     <string name="create_account">Create Account</string>
     <string name="change_account_type">Change account type</string>
     <string name="back">Back</string>
+
+    <string-array name="genres">
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Traditional/Folk</item>
+        <item>Jazz</item>
+        <item>Blues</item>
+        <item>Classical</item>
+        <item>Country</item>
+        <item>Electronic</item>
+        <item>Hip-Hop/R&amp;B</item>
+        <item>Soul/Funk</item>
+        <item>Comedy/Other</item>
+    </string-array>
+
+    <string-array name="genres_with_any">
+        <item>Any</item>
+        <item>Rock</item>
+        <item>Pop</item>
+        <item>Traditional/Folk</item>
+        <item>Jazz</item>
+        <item>Blues</item>
+        <item>Classical</item>
+        <item>Country</item>
+        <item>Electronic</item>
+        <item>Hip-Hop/R&amp;B</item>
+        <item>Soul/Funk</item>
+        <item>Comedy/Other</item>
+    </string-array>
 </resources>

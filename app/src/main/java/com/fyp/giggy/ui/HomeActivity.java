@@ -1,11 +1,12 @@
 // C21361681 – Michael Traynor
-// Role-aware dashboard
-// Sprint 2 update: Edit Profile button now launches correct profile screen
+// HomeActivity.java – Role-aware dashboard
+// Sprint 4 update: added My Bookings (artist) and Booking Requests (venue) buttons
 
 package com.fyp.giggy.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Sprint 2: read role from SessionManager instead of Intent extras
         SessionManager session = new SessionManager(this);
         String role = session.getRole();
         String name = session.getUsername();
@@ -30,34 +30,56 @@ public class HomeActivity extends AppCompatActivity {
         if (name == null) name = "Giggy User";
         if (role == null) role = "artist";
 
-        TextView tvWelcome = findViewById(R.id.tvWelcome);
-        TextView tvRole    = findViewById(R.id.tvRole);
-        Button btnAction      = findViewById(R.id.btnPrimaryAction);
-        Button btnEditProfile = findViewById(R.id.btnEditProfile);
-        Button btnLogout      = findViewById(R.id.btnLogout);
+        TextView tvWelcome       = findViewById(R.id.tvWelcome);
+        TextView tvRole          = findViewById(R.id.tvRole);
+        Button btnAction         = findViewById(R.id.btnPrimaryAction);
+        Button btnSecondary      = findViewById(R.id.btnSecondaryAction);
+        Button btnMyProfile      = findViewById(R.id.btnMyProfile);
+        Button btnBookings       = findViewById(R.id.btnBookings);
+        Button btnLogout         = findViewById(R.id.btnLogout);
 
-        // Just the name, no "Welcome"
         tvWelcome.setText(name);
         tvRole.setText(role.equals("venue") ? "Venue Account" : "Artist Account");
 
+        final String finalRole = role;
+
         if ("venue".equals(role)) {
-            btnAction.setText("Create a New Gig");
+            btnAction.setText("Post a Gig");
+            btnSecondary.setText("Find Artists");
+            btnSecondary.setVisibility(View.VISIBLE);
+            btnBookings.setText("Booking Requests");
         } else {
             btnAction.setText("Browse Gigs");
+            btnSecondary.setVisibility(View.GONE);
+            btnBookings.setText("My Applications");
         }
 
         btnAction.setOnClickListener(v -> {
-            // TODO (Sprint 3): navigate to role-specific features
+            if ("venue".equals(finalRole)) {
+                startActivity(new Intent(this, PostGigActivity.class));
+            } else {
+                startActivity(new Intent(this, BrowseGigsActivity.class));
+            }
         });
 
-        // Sprint 2: launch the correct profile screen based on role
-        final String finalRole = role;
-        btnEditProfile.setOnClickListener(v -> {
+        btnSecondary.setOnClickListener(v ->
+                startActivity(new Intent(this, SearchArtistsActivity.class))
+        );
+
+        btnBookings.setOnClickListener(v -> {
+            if ("venue".equals(finalRole)) {
+                startActivity(new Intent(this, VenueBookingsActivity.class));
+            } else {
+                startActivity(new Intent(this, MyBookingsActivity.class));
+            }
+        });
+
+        btnMyProfile.setOnClickListener(v -> {
             Intent i;
             if ("venue".equals(finalRole)) {
-                i = new Intent(this, EditVenueProfileActivity.class);
+                i = new Intent(this, ViewVenueProfileActivity.class);
             } else {
-                i = new Intent(this, EditArtistProfileActivity.class);
+                i = new Intent(this, ViewArtistProfileActivity.class);
             }
             startActivity(i);
         });

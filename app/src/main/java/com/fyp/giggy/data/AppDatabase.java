@@ -1,6 +1,6 @@
 // C21361681 – Michael Traynor
-// Room Database – updated for Sprint 2 (Profile Management)
-// VERSION 2: Added ArtistProfile and VenueProfile tables
+// AppDatabase.java – Room database, version 4
+// Sprint 4: added bookings table
 
 package com.fyp.giggy.data;
 
@@ -13,91 +13,72 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(
-        entities = {
-                User.class,
-                ArtistProfile.class,
-                VenueProfile.class
-        },
-        version = 2,
+        entities = {User.class, ArtistProfile.class, VenueProfile.class, GigListing.class, Booking.class},
+        version = 4,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static volatile AppDatabase INSTANCE;
+    private static AppDatabase instance;
 
-    // DAOs
     public abstract UserDao userDao();
     public abstract ArtistProfileDao artistProfileDao();
     public abstract VenueProfileDao venueProfileDao();
+    public abstract GigListingDao gigListingDao();
+    public abstract BookingDao bookingDao();
 
-    // Migration from version 1 (User only) → version 2 (+ profiles)
+    public static synchronized AppDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            AppDatabase.class,
+                            "giggy_db"
+                    )
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .build();
+        }
+        return instance;
+    }
+
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            // Create artist_profiles table
-            database.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `artist_profiles` (" +
-                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                            "`userId` INTEGER NOT NULL, " +
-                            "`stageName` TEXT NOT NULL, " +
-                            "`genre` TEXT NOT NULL, " +
-                            "`actType` TEXT NOT NULL, " +
-                            "`location` TEXT NOT NULL, " +
-                            "`bio` TEXT, " +
-                            "`spotifyUrl` TEXT, " +
-                            "`instagramUrl` TEXT, " +
-                            "`facebookUrl` TEXT, " +
-                            "`youtubeUrl` TEXT, " +
-                            "`websiteUrl` TEXT, " +
-                            "`averageRating` REAL NOT NULL DEFAULT 0.0, " +
-                            "`reviewCount` INTEGER NOT NULL DEFAULT 0, " +
-                            "FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE)"
-            );
-            database.execSQL(
-                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_artist_profiles_userId` " +
-                            "ON `artist_profiles` (`userId`)"
-            );
-
-            // Create venue_profiles table
-            database.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `venue_profiles` (" +
-                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                            "`userId` INTEGER NOT NULL, " +
-                            "`venueName` TEXT NOT NULL, " +
-                            "`location` TEXT NOT NULL, " +
-                            "`venueType` TEXT NOT NULL, " +
-                            "`description` TEXT, " +
-                            "`phoneNumber` TEXT, " +
-                            "`websiteUrl` TEXT, " +
-                            "`instagramUrl` TEXT, " +
-                            "`facebookUrl` TEXT, " +
-                            "`capacity` INTEGER NOT NULL DEFAULT 0, " +
-                            "`averageRating` REAL NOT NULL DEFAULT 0.0, " +
-                            "`reviewCount` INTEGER NOT NULL DEFAULT 0, " +
-                            "FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE)"
-            );
-            database.execSQL(
-                    "CREATE UNIQUE INDEX IF NOT EXISTS `index_venue_profiles_userId` " +
-                            "ON `venue_profiles` (`userId`)"
-            );
+        @Override public void migrate(SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS artist_profiles (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, userId INTEGER NOT NULL, stageName TEXT, genre TEXT, actType TEXT, location TEXT, bio TEXT, spotifyUrl TEXT, instagramUrl TEXT, facebookUrl TEXT, youtubeUrl TEXT, websiteUrl TEXT, averageRating REAL NOT NULL DEFAULT 0, reviewCount INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE)");
+            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_artist_profiles_userId ON artist_profiles(userId)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS venue_profiles (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, userId INTEGER NOT NULL, venueName TEXT, location TEXT, venueType TEXT, description TEXT, phoneNumber TEXT, websiteUrl TEXT, instagramUrl TEXT, facebookUrl TEXT, capacity INTEGER NOT NULL DEFAULT 0, averageRating REAL NOT NULL DEFAULT 0, reviewCount INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE)");
+            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_venue_profiles_userId ON venue_profiles(userId)");
         }
     };
 
-    // Singleton accessor
-    public static AppDatabase getInstance(Context context) {
-        if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                                    context.getApplicationContext(),
-                                    AppDatabase.class,
-                                    "giggy_db"
-                            )
-                            .addMigrations(MIGRATION_1_2)
-                            .build();
-                }
-            }
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override public void migrate(SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS gig_listings (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, venueUserId INTEGER NOT NULL, venueName TEXT, location TEXT, gigDate TEXT, gigTime TEXT, duration TEXT, genreWanted TEXT, description TEXT, payAmount REAL NOT NULL DEFAULT 0, status TEXT, createdAt INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(venueUserId) REFERENCES users(id) ON DELETE CASCADE)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_gig_listings_venueUserId ON gig_listings(venueUserId)");
         }
-        return INSTANCE;
-    }
+    };
+
+    // Sprint 4: bookings table
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override public void migrate(SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS bookings (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "gigId INTEGER NOT NULL," +
+                    "artistUserId INTEGER NOT NULL," +
+                    "venueUserId INTEGER NOT NULL," +
+                    "artistName TEXT," +
+                    "venueName TEXT," +
+                    "gigDate TEXT," +
+                    "gigTime TEXT," +
+                    "location TEXT," +
+                    "payAmount REAL NOT NULL DEFAULT 0," +
+                    "status TEXT," +
+                    "artistMessage TEXT," +
+                    "createdAt INTEGER NOT NULL DEFAULT 0," +
+                    "FOREIGN KEY(artistUserId) REFERENCES users(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY(venueUserId) REFERENCES users(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY(gigId) REFERENCES gig_listings(id) ON DELETE CASCADE)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_artistUserId ON bookings(artistUserId)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_venueUserId ON bookings(venueUserId)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_gigId ON bookings(gigId)");
+        }
+    };
 }

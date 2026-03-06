@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Venue: post a new gig with calendar and time wheel pickers -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/giggy_black" android:fillViewport="true">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp"
+        android:windowSoftInputMode="adjustResize">
+
+        <Button android:id="@+id/btnBack"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="← Back" android:textColor="@color/giggy_hint"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Post a Gig" android:textColor="@color/giggy_text"
+            android:textSize="26sp" android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Date picker button -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Date" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <Button android:id="@+id/btnPickDate"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:text="Select Date"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Time picker button -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Time" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <Button android:id="@+id/btnPickTime"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:text="Select Time"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Duration -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Duration (e.g. 2 hours)" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etDuration"
+            style="@style/GiggyEditText"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:hint="e.g. 2 hours" android:layout_marginBottom="16dp"/>
+
+        <!-- Genre -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Genre Wanted" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinnerGenre"
+            style="@style/GiggySpinner"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Pay -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Pay Amount (€)" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etPay"
+            style="@style/GiggyEditText"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:hint="e.g. 150" android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Description -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Description" android:textColor="@color/giggy_hint"
+            android:textSize="12sp" android:textAllCaps="true" android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etDescription"
+            style="@style/GiggyEditText"
+            android:layout_width="match_parent" android:layout_height="120dp"
+            android:hint="Describe the gig..." android:gravity="top"
+            android:inputType="textMultiLine" android:layout_marginBottom="24dp"/>
+
+        <!-- Submit -->
+        <Button android:id="@+id/btnPostGig"
+            android:layout_width="match_parent" android:layout_height="56dp"
+            android:text="Post Gig"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"/>
+
+    </LinearLayout>
+</ScrollView>

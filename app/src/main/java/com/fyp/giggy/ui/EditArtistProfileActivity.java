@@ -1,190 +1,140 @@
 // C21361681 – Michael Traynor
-// Activity for Artists to create or edit their EPK-style profile
+// EditArtistProfileActivity.java – Create or update artist profile
+// Fix: after saving, navigate to ViewArtistProfileActivity (not finish() which crashes on first setup)
 
 package com.fyp.giggy.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.fyp.giggy.R;
 import com.fyp.giggy.data.AppDatabase;
 import com.fyp.giggy.data.ArtistProfile;
-import com.fyp.giggy.data.ArtistProfileDao;
 import com.fyp.giggy.utils.SessionManager;
 
 public class EditArtistProfileActivity extends AppCompatActivity {
 
-    private EditText etStageName, etLocation, etBio,
-            etSpotify, etInstagram, etFacebook,
-            etYoutube, etWebsite;
-    private Spinner  spinnerGenre, spinnerActType;
-    private Button   btnSave;
-
-    private ArtistProfileDao artistProfileDao;
-    private long userId;
-    private ArtistProfile existingProfile;
-
-    // Genre options
-    private static final String[] GENRES = {
-            "Select Genre", "Rock", "Pop", "Traditional/Folk", "Jazz", "Blues",
-            "Classical", "Country", "Electronic", "Hip-Hop/R&B", "Soul/Funk",
-            "Comedy/Other"
-    };
-
-    // Act type options
-    private static final String[] ACT_TYPES = {
-            "Select Act Type", "Solo", "Duo", "Trio", "Band", "DJ", "Other"
-    };
+    private EditText etStageName, etLocation, etBio, etSpotify, etInstagram, etFacebook, etYoutube, etWebsite;
+    private Spinner spinnerGenre, spinnerActType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_artist_profile);
 
-        // Get logged-in user ID from session
         SessionManager session = new SessionManager(this);
-        userId = session.getUserId();
 
-        artistProfileDao = AppDatabase.getInstance(this).artistProfileDao();
-
-        bindViews();
-        setupSpinners();
-        loadExistingProfile();
-
-        btnSave.setOnClickListener(v -> saveProfile());
-    }
-
-    private void bindViews() {
-        etStageName   = findViewById(R.id.etStageName);
-        etLocation    = findViewById(R.id.etLocation);
-        etBio         = findViewById(R.id.etBio);
-        etSpotify     = findViewById(R.id.etSpotify);
-        etInstagram   = findViewById(R.id.etInstagram);
-        etFacebook    = findViewById(R.id.etFacebook);
-        etYoutube     = findViewById(R.id.etYoutube);
-        etWebsite     = findViewById(R.id.etWebsite);
-        spinnerGenre  = findViewById(R.id.spinnerGenre);
+        etStageName  = findViewById(R.id.etStageName);
+        etLocation   = findViewById(R.id.etLocation);
+        etBio        = findViewById(R.id.etBio);
+        etSpotify    = findViewById(R.id.etSpotify);
+        etInstagram  = findViewById(R.id.etInstagram);
+        etFacebook   = findViewById(R.id.etFacebook);
+        etYoutube    = findViewById(R.id.etYoutube);
+        etWebsite    = findViewById(R.id.etWebsite);
+        spinnerGenre   = findViewById(R.id.spinnerGenre);
         spinnerActType = findViewById(R.id.spinnerActType);
-        btnSave       = findViewById(R.id.btnSaveProfile);
-    }
 
-    private void setupSpinners() {
-        ArrayAdapter<String> genreAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, GENRES);
+        Button btnSave = findViewById(R.id.btnSaveProfile);
+
+        // Genre spinner
+        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(
+                this, R.array.genres, android.R.layout.simple_spinner_item);
         genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGenre.setAdapter(genreAdapter);
 
+        // Act type spinner
+        String[] actTypes = {"Solo", "Duo", "Band", "DJ", "Other"};
         ArrayAdapter<String> actAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, ACT_TYPES);
+                this, android.R.layout.simple_spinner_item, actTypes);
         actAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerActType.setAdapter(actAdapter);
-    }
 
-    // Load profile data if it already exists (edit mode)
-    private void loadExistingProfile() {
+        // Pre-fill if profile already exists
         new Thread(() -> {
-            existingProfile = artistProfileDao.getProfileByUserId(userId);
-            if (existingProfile != null) {
-                runOnUiThread(() -> populateFields(existingProfile));
+            ArtistProfile existing = AppDatabase.getInstance(this)
+                    .artistProfileDao().getProfileByUserId(session.getUserId());
+            if (existing != null) {
+                runOnUiThread(() -> prefillForm(existing, genreAdapter, actAdapter));
             }
         }).start();
+
+        btnSave.setOnClickListener(v -> saveProfile(session));
     }
 
-    private void populateFields(ArtistProfile profile) {
-        etStageName.setText(profile.stageName);
-        etLocation.setText(profile.location);
-        etBio.setText(profile.bio != null ? profile.bio : "");
-        etSpotify.setText(profile.spotifyUrl != null ? profile.spotifyUrl : "");
-        etInstagram.setText(profile.instagramUrl != null ? profile.instagramUrl : "");
-        etFacebook.setText(profile.facebookUrl != null ? profile.facebookUrl : "");
-        etYoutube.setText(profile.youtubeUrl != null ? profile.youtubeUrl : "");
-        etWebsite.setText(profile.websiteUrl != null ? profile.websiteUrl : "");
+    private void prefillForm(ArtistProfile p,
+                             ArrayAdapter<CharSequence> genreAdapter,
+                             ArrayAdapter<String> actAdapter) {
+        if (p.stageName  != null) etStageName.setText(p.stageName);
+        if (p.location   != null) etLocation.setText(p.location);
+        if (p.bio        != null) etBio.setText(p.bio);
+        if (p.spotifyUrl != null) etSpotify.setText(p.spotifyUrl);
+        if (p.instagramUrl != null) etInstagram.setText(p.instagramUrl);
+        if (p.facebookUrl  != null) etFacebook.setText(p.facebookUrl);
+        if (p.youtubeUrl   != null) etYoutube.setText(p.youtubeUrl);
+        if (p.websiteUrl   != null) etWebsite.setText(p.websiteUrl);
 
-        // Set spinner selections
-        setSpinnerSelection(spinnerGenre, GENRES, profile.genre);
-        setSpinnerSelection(spinnerActType, ACT_TYPES, profile.actType);
-    }
-
-    private void setSpinnerSelection(Spinner spinner, String[] options, String value) {
-        for (int i = 0; i < options.length; i++) {
-            if (options[i].equals(value)) {
-                spinner.setSelection(i);
-                return;
-            }
+        if (p.genre != null) {
+            int pos = genreAdapter.getPosition(p.genre);
+            if (pos >= 0) spinnerGenre.setSelection(pos);
+        }
+        if (p.actType != null) {
+            int pos = actAdapter.getPosition(p.actType);
+            if (pos >= 0) spinnerActType.setSelection(pos);
         }
     }
 
-    private void saveProfile() {
+    private void saveProfile(SessionManager session) {
         String stageName = etStageName.getText().toString().trim();
-        String location  = etLocation.getText().toString().trim();
-        String genre     = spinnerGenre.getSelectedItem().toString();
-        String actType   = spinnerActType.getSelectedItem().toString();
-
-        // Validate required fields
-        if (TextUtils.isEmpty(stageName)) {
-            etStageName.setError("Stage name is required");
-            etStageName.requestFocus();
+        if (stageName.isEmpty()) {
+            Toast.makeText(this, "Please enter a stage name", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(location)) {
-            etLocation.setError("Location is required");
-            etLocation.requestFocus();
-            return;
-        }
-        if (genre.equals("Select Genre")) {
-            Toast.makeText(this, "Please select a genre", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (actType.equals("Select Act Type")) {
-            Toast.makeText(this, "Please select an act type", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Build or update the profile object
-        if (existingProfile == null) {
-            existingProfile = new ArtistProfile(userId, stageName, genre, actType, location);
-        } else {
-            existingProfile.stageName = stageName;
-            existingProfile.genre     = genre;
-            existingProfile.actType   = actType;
-            existingProfile.location  = location;
-        }
-
-        existingProfile.bio          = nullIfEmpty(etBio.getText().toString().trim());
-        existingProfile.spotifyUrl   = nullIfEmpty(etSpotify.getText().toString().trim());
-        existingProfile.instagramUrl = nullIfEmpty(etInstagram.getText().toString().trim());
-        existingProfile.facebookUrl  = nullIfEmpty(etFacebook.getText().toString().trim());
-        existingProfile.youtubeUrl   = nullIfEmpty(etYoutube.getText().toString().trim());
-        existingProfile.websiteUrl   = nullIfEmpty(etWebsite.getText().toString().trim());
-
-        final ArtistProfile profileToSave = existingProfile;
 
         new Thread(() -> {
-            try {
-                artistProfileDao.insertProfile(profileToSave); // REPLACE handles both insert + update
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Profile updated successfully.", Toast.LENGTH_SHORT).show();
-                    finish(); // Go back to the artist dashboard
-                });
-            } catch (Exception e) {
-                runOnUiThread(() ->
-                        Toast.makeText(this, "Could not save profile. Please try again.",
-                                Toast.LENGTH_SHORT).show()
-                );
-            }
-        }).start();
-    }
+            AppDatabase db = AppDatabase.getInstance(this);
+            long userId = session.getUserId();
 
-    private String nullIfEmpty(String value) {
-        return TextUtils.isEmpty(value) ? null : value;
+            ArtistProfile existing = db.artistProfileDao().getProfileByUserId(userId);
+
+            String genre    = spinnerGenre.getSelectedItem()   != null ? spinnerGenre.getSelectedItem().toString()   : "Rock";
+            String actType  = spinnerActType.getSelectedItem() != null ? spinnerActType.getSelectedItem().toString() : "Solo";
+            String location = etLocation.getText().toString().trim();
+            if (location.isEmpty()) location = "Ireland";
+
+            if (existing == null) {
+                // Use the required constructor: (userId, stageName, genre, actType, location)
+                existing = new ArtistProfile(userId, stageName, genre, actType, location);
+            } else {
+                existing.stageName = stageName;
+                existing.genre     = genre;
+                existing.actType   = actType;
+                existing.location  = location;
+            }
+
+            existing.bio          = etBio.getText().toString().trim();
+            existing.spotifyUrl   = etSpotify.getText().toString().trim();
+            existing.instagramUrl = etInstagram.getText().toString().trim();
+            existing.facebookUrl  = etFacebook.getText().toString().trim();
+            existing.youtubeUrl   = etYoutube.getText().toString().trim();
+            existing.websiteUrl   = etWebsite.getText().toString().trim();
+
+            if (existing.id == 0) {
+                db.artistProfileDao().insertProfile(existing);
+            } else {
+                db.artistProfileDao().updateProfile(existing);
+            }
+
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Profile saved!", Toast.LENGTH_SHORT).show();
+                // Navigate to profile view, clearing the back stack so pressing back
+                // from profile goes to Home, not back to edit
+                Intent i = new Intent(this, ViewArtistProfileActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
+                finish();
+            });
+        }).start();
     }
 }

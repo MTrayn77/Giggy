@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- C21361681 – Michael Traynor -->
+<!-- Layout for viewing venue profile -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/giggy_black"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Top bar: Back + Edit -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnBack"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← Back"
+                android:textColor="@color/giggy_hint"/>
+
+            <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btnEditProfile"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textColor="@color/giggy_green"
+                app:strokeColor="@color/giggy_green"/>
+        </LinearLayout>
+
+        <!-- Venue Name -->
+        <TextView
+            android:id="@+id/tvVenueName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_text"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Venue Type -->
+        <TextView
+            android:id="@+id/tvVenueType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_green"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Location -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_hint"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Capacity -->
+        <TextView
+            android:id="@+id/tvCapacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_hint"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_green"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Divider -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="#222222" android:layout_marginBottom="16dp"/>
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_text"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Divider -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="#222222" android:layout_marginBottom="16dp"/>
+
+        <!-- Contact & Links -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Phone row -->
+        <LinearLayout android:id="@+id/rowPhone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <TextView android:layout_width="80dp" android:layout_height="wrap_content"
+                android:text="Phone" android:textColor="@color/giggy_hint" android:textSize="13sp"/>
+            <TextView android:id="@+id/tvPhone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/giggy_text" android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- Website row -->
+        <LinearLayout android:id="@+id/rowWebsite"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <TextView android:layout_width="80dp" android:layout_height="wrap_content"
+                android:text="Website" android:textColor="@color/giggy_hint" android:textSize="13sp"/>
+            <TextView android:id="@+id/tvWebsite"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/giggy_green" android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- Instagram row -->
+        <LinearLayout android:id="@+id/rowInstagram"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <TextView android:layout_width="80dp" android:layout_height="wrap_content"
+                android:text="Instagram" android:textColor="@color/giggy_hint" android:textSize="13sp"/>
+            <TextView android:id="@+id/tvInstagram"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/giggy_green" android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- Facebook row -->
+        <LinearLayout android:id="@+id/rowFacebook"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <TextView android:layout_width="80dp" android:layout_height="wrap_content"
+                android:text="Facebook" android:textColor="@color/giggy_hint" android:textSize="13sp"/>
+            <TextView android:id="@+id/tvFacebook"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/giggy_green" android:textSize="13sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

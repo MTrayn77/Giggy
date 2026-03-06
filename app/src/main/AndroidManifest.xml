@@ -17,6 +17,8 @@
         <activity android:name=".ui.LoginActivity" />
 
         <!-- Sprint 2: Profile setup/edit screens -->
+        <activity android:name=".ui.ViewArtistProfileActivity" />
+        <activity android:name=".ui.ViewVenueProfileActivity" />
         <activity
             android:name=".ui.EditArtistProfileActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -31,6 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.PostGigActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.BrowseGigsActivity"/>
+        <activity android:name=".ui.GigDetailActivity"/>
+        <activity android:name=".ui.SearchArtistsActivity"/>
+
+        <activity android:name=".ui.MyBookingsActivity"/>
+        <activity android:name=".ui.VenueBookingsActivity"/>
+        <activity android:name=".ui.BookingDetailActivity"/>
 
     </application>
 </manifest>
