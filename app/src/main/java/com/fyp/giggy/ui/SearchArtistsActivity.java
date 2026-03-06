@@ -1,6 +1,7 @@
 // C21361681 – Michael Traynor
 // SearchArtistsActivity.java – Venue searches/browses artist profiles
-// Fix: tapping an artist now opens THEIR profile (passes viewUserId), not the logged-in user's
+// Fix: uses correct layout IDs (spGenreFilter, etLocationFilter, listArtists)
+// Fix: tapping an artist opens THEIR profile via viewUserId extra
 
 package com.fyp.giggy.ui;
 
@@ -11,22 +12,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fyp.giggy.R;
 import com.fyp.giggy.data.AppDatabase;
 import com.fyp.giggy.data.ArtistProfile;
-import com.fyp.giggy.utils.SessionManager;
 
 import java.util.List;
 
 public class SearchArtistsActivity extends AppCompatActivity {
 
     private List<ArtistProfile> profiles;
-    private Spinner spinnerGenre, spinnerLocation;
+    private Spinner spGenreFilter;
+    private EditText etLocationFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_artists);
 
-        spinnerGenre    = findViewById(R.id.spinnerGenre);
-        spinnerLocation = findViewById(R.id.spinnerLocation);
+        spGenreFilter    = findViewById(R.id.spGenreFilter);
+        etLocationFilter = findViewById(R.id.etLocationFilter);
         ListView listView = findViewById(R.id.listArtists);
         Button btnBack   = findViewById(R.id.btnBack);
         Button btnSearch = findViewById(R.id.btnSearch);
@@ -37,10 +38,7 @@ public class SearchArtistsActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(
                 this, R.array.genres_with_any, android.R.layout.simple_spinner_item);
         genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGenre.setAdapter(genreAdapter);
-
-        // Location spinner - populated from existing profiles
-        loadLocationSpinner();
+        spGenreFilter.setAdapter(genreAdapter);
 
         btnSearch.setOnClickListener(v -> searchArtists(listView));
 
@@ -51,45 +49,19 @@ public class SearchArtistsActivity extends AppCompatActivity {
             if (profiles != null && position < profiles.size()) {
                 ArtistProfile p = profiles.get(position);
                 Intent i = new Intent(this, ViewArtistProfileActivity.class);
-                // Pass the artist's userId so ViewArtistProfileActivity shows THEIR profile
                 i.putExtra("viewUserId", p.userId);
                 startActivity(i);
             }
         });
     }
 
-    private void loadLocationSpinner() {
-        new Thread(() -> {
-            List<ArtistProfile> all = AppDatabase.getInstance(this)
-                    .artistProfileDao().getAllProfiles();
-
-            // Collect unique locations
-            java.util.LinkedHashSet<String> locations = new java.util.LinkedHashSet<>();
-            locations.add("Any");
-            for (ArtistProfile p : all) {
-                if (p.location != null && !p.location.isEmpty()) {
-                    locations.add(p.location);
-                }
-            }
-
-            String[] locArray = locations.toArray(new String[0]);
-            runOnUiThread(() -> {
-                ArrayAdapter<String> locAdapter = new ArrayAdapter<>(
-                        this, android.R.layout.simple_spinner_item, locArray);
-                locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerLocation.setAdapter(locAdapter);
-            });
-        }).start();
-    }
-
     private void searchArtists(ListView listView) {
-        String genre    = spinnerGenre.getSelectedItem() != null
-                ? spinnerGenre.getSelectedItem().toString() : "Any";
-        String location = spinnerLocation.getSelectedItem() != null
-                ? spinnerLocation.getSelectedItem().toString() : "Any";
+        String genre    = spGenreFilter.getSelectedItem() != null
+                ? spGenreFilter.getSelectedItem().toString() : "Any";
+        String location = etLocationFilter.getText().toString().trim();
 
         boolean anyGenre    = genre.equals("Any");
-        boolean anyLocation = location.equals("Any");
+        boolean anyLocation = location.isEmpty();
 
         new Thread(() -> {
             AppDatabase db = AppDatabase.getInstance(this);
