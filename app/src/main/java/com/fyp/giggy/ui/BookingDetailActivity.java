@@ -1,9 +1,10 @@
 // C21361681 – Michael Traynor
-// BookingDetailActivity.java – Venue views a single booking request and confirms or declines
-// Sprint 4: Booking System
+// BookingDetailActivity.java – View a booking, confirm/decline, open conversation
+// Sprint 4: Booking System | Sprint 5: Messaging + Notifications added
 
 package com.fyp.giggy.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fyp.giggy.R;
 import com.fyp.giggy.data.AppDatabase;
 import com.fyp.giggy.data.Booking;
+import com.fyp.giggy.utils.NotificationHelper;
 import com.fyp.giggy.utils.SessionManager;
 
 public class BookingDetailActivity extends AppCompatActivity {
@@ -25,11 +27,21 @@ public class BookingDetailActivity extends AppCompatActivity {
         long bookingId = getIntent().getLongExtra("bookingId", -1);
         if (bookingId == -1) { finish(); return; }
 
+        SessionManager session = new SessionManager(this);
+
         Button btnBack    = findViewById(R.id.btnBack);
         Button btnConfirm = findViewById(R.id.btnConfirm);
         Button btnDecline = findViewById(R.id.btnDecline);
+        Button btnMessage = findViewById(R.id.btnMessage);
 
         btnBack.setOnClickListener(v -> finish());
+
+        btnMessage.setOnClickListener(v -> {
+            if (booking == null) return;
+            Intent i = new Intent(this, ConversationActivity.class);
+            i.putExtra("bookingId", booking.id);
+            startActivity(i);
+        });
 
         new Thread(() -> {
             booking = AppDatabase.getInstance(this).bookingDao().getBookingById(bookingId);
@@ -37,8 +49,9 @@ public class BookingDetailActivity extends AppCompatActivity {
                 if (booking == null) { finish(); return; }
                 populateViews(booking);
 
-                // Only show confirm/decline buttons if still pending
-                if (!"pending".equals(booking.status)) {
+                // Confirm/decline only for venue, only when pending
+                boolean isVenue = session.getUserId() == booking.venueUserId;
+                if (!isVenue || !"pending".equals(booking.status)) {
                     btnConfirm.setVisibility(View.GONE);
                     btnDecline.setVisibility(View.GONE);
                 }
@@ -55,10 +68,13 @@ public class BookingDetailActivity extends AppCompatActivity {
             AppDatabase db = AppDatabase.getInstance(this);
             db.bookingDao().updateStatus(booking.id, newStatus);
 
-            // If confirmed, mark the gig as filled
             if ("confirmed".equals(newStatus)) {
                 db.gigListingDao().updateStatus(booking.gigId, "filled");
             }
+
+            // Notify the artist of the status change
+            NotificationHelper.sendBookingStatusNotification(
+                    this, booking.artistUserId, newStatus, booking.gigDate);
 
             runOnUiThread(() -> {
                 String msg = "confirmed".equals(newStatus) ? "Booking confirmed!" : "Booking declined.";

@@ -1,66 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- C21361681 – Michael Traynor -->
-<!-- Venue: view a single booking request and confirm or decline -->
+<!-- Venue: view a single booking request, confirm/decline, open conversation -->
+<!-- Sprint 5: added Message button -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/giggy_black" android:fillViewport="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/giggy_black"
+    android:fillViewport="true">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="24dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <Button android:id="@+id/btnBack"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="← Back" android:textColor="@color/giggy_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Back"
+            android:textColor="@color/giggy_hint"
             android:layout_marginBottom="12dp"/>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Booking Request" android:textColor="@color/giggy_hint"
-            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.1"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Booking Request"
+            android:textColor="@color/giggy_hint"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
             android:layout_marginBottom="6dp"/>
 
         <TextView android:id="@+id/tvArtistName"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_text" android:textSize="26sp"
-            android:textStyle="bold" android:layout_marginBottom="4dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_text"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
 
         <TextView android:id="@+id/tvGigDate"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_green" android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_green"
+            android:textSize="15sp"
             android:layout_marginBottom="4dp"/>
 
         <TextView android:id="@+id/tvLocation"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_hint" android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_hint"
+            android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
         <TextView android:id="@+id/tvPay"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_text" android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_text"
+            android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
         <TextView android:id="@+id/tvStatus"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_green" android:textSize="12sp"
-            android:textAllCaps="true" android:layout_marginBottom="16dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_green"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:layout_marginBottom="16dp"/>
 
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="#222222" android:layout_marginBottom="16dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#222222"
+            android:layout_marginBottom="16dp"/>
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Message from Artist" android:textColor="#AAAAAA"
-            android:textSize="11sp" android:textAllCaps="true" android:letterSpacing="0.1"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Message from Artist"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
             android:layout_marginBottom="6dp"/>
 
         <TextView android:id="@+id/tvMessage"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:textColor="@color/giggy_text" android:textSize="15sp"
-            android:lineSpacingExtra="4dp" android:layout_marginBottom="32dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/giggy_text"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Sprint 5: Message button -->
+        <Button android:id="@+id/btnMessage"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="💬 Open Conversation"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"
+            app:backgroundTint="@null"
+            android:layout_marginBottom="12dp"/>
 
         <!-- Confirm button -->
         <Button android:id="@+id/btnConfirm"
-            android:layout_width="match_parent" android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:text="Confirm Booking"
             android:textColor="@color/giggy_black"
             android:background="@drawable/green_button"
@@ -69,7 +116,8 @@
 
         <!-- Decline button -->
         <Button android:id="@+id/btnDecline"
-            android:layout_width="match_parent" android:layout_height="56dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:text="Decline"
             android:textColor="@color/giggy_green"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"

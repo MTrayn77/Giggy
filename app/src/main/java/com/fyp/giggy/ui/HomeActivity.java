@@ -1,6 +1,6 @@
 // C21361681 – Michael Traynor
 // HomeActivity.java – Role-aware dashboard
-// Sprint 4 update: booking buttons added, layout IDs updated to match activity_home.xml
+// Sprint 5: Messages button added for both roles
 
 package com.fyp.giggy.ui;
 
@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.fyp.giggy.R;
 import com.fyp.giggy.utils.SessionManager;
 
@@ -34,19 +32,22 @@ public class HomeActivity extends AppCompatActivity {
         TextView tvUsername     = findViewById(R.id.tvUsername);
         TextView tvRole         = findViewById(R.id.tvRole);
         Button btnMyProfile     = findViewById(R.id.btnMyProfile);
+        Button btnMessages      = findViewById(R.id.btnMessages);
         Button btnLogout        = findViewById(R.id.btnLogout);
 
-        // Artist buttons
         Button btnBrowseGigs    = findViewById(R.id.btnBrowseGigs);
         Button btnSearchArtists = findViewById(R.id.btnSearchArtists);
         Button btnBookings      = findViewById(R.id.btnBookings);
 
-        // Venue buttons
         Button btnPostGig       = findViewById(R.id.btnPostGig);
         Button btnFindArtists   = findViewById(R.id.btnFindArtists);
         Button btnVenueBookings = findViewById(R.id.btnVenueBookings);
 
         tvUsername.setText(name);
+
+        // Messages is available to both roles
+        btnMessages.setOnClickListener(v ->
+                startActivity(new Intent(this, InboxActivity.class)));
 
         if ("venue".equals(role)) {
             tvRole.setText("Venue Account");

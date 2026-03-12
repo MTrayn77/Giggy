@@ -1,20 +1,21 @@
 // C21361681 – Michael Traynor
 // ViewVenueProfileActivity.java – View a venue's profile
-// Sprint 4 fix: accepts viewUserId extra so artists can view venue profiles
-//               hides edit button when viewing another user's profile
+// Sprint 4 fix: viewUserId support | Sprint 5: Send Message button
 
 package com.fyp.giggy.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.fyp.giggy.R;
 import com.fyp.giggy.data.AppDatabase;
+import com.fyp.giggy.data.Booking;
 import com.fyp.giggy.data.VenueProfile;
 import com.fyp.giggy.utils.SessionManager;
+
+import java.util.List;
 
 public class ViewVenueProfileActivity extends AppCompatActivity {
 
@@ -24,35 +25,69 @@ public class ViewVenueProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_venue_profile);
 
         SessionManager session = new SessionManager(this);
-        Button btnEdit = findViewById(R.id.btnEditProfile);
-        Button btnBack = findViewById(R.id.btnBack);
+        Button btnEdit    = findViewById(R.id.btnEditProfile);
+        Button btnBack    = findViewById(R.id.btnBack);
+        Button btnMessage = findViewById(R.id.btnMessageProfile);
 
         btnBack.setOnClickListener(v -> finish());
 
-        long viewUserId   = getIntent().getLongExtra("viewUserId", -1);
+        long viewUserId    = getIntent().getLongExtra("viewUserId", -1);
         long sessionUserId = session.getUserId();
         boolean isOwnProfile = (viewUserId == -1 || viewUserId == sessionUserId);
-        long targetUserId = isOwnProfile ? sessionUserId : viewUserId;
+        long targetUserId    = isOwnProfile ? sessionUserId : viewUserId;
 
-        // Only show edit button for own profile
         if (btnEdit != null) {
             btnEdit.setVisibility(isOwnProfile ? View.VISIBLE : View.GONE);
             btnEdit.setOnClickListener(v ->
                     startActivity(new Intent(this, EditVenueProfileActivity.class)));
         }
 
+        // Message button: only show when viewing someone else's profile
+        if (btnMessage != null)
+            btnMessage.setVisibility(isOwnProfile ? View.GONE : View.VISIBLE);
+
+        if (btnMessage != null && !isOwnProfile) {
+            final long otherUserId = targetUserId;
+            btnMessage.setOnClickListener(v -> {
+                new Thread(() -> {
+                    // Find a booking shared between this artist and the venue
+                    List<Booking> bookings = AppDatabase.getInstance(this)
+                            .bookingDao().getBookingsForArtist(sessionUserId);
+
+                    Booking shared = null;
+                    for (Booking b : bookings) {
+                        if (b.venueUserId == otherUserId) {
+                            shared = b;
+                            break;
+                        }
+                    }
+
+                    final Booking booking = shared;
+                    runOnUiThread(() -> {
+                        if (booking == null) {
+                            Toast.makeText(this,
+                                    "No booking found with this venue. Apply to a gig first.",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent i = new Intent(this, ConversationActivity.class);
+                            i.putExtra("bookingId", booking.id);
+                            startActivity(i);
+                        }
+                    });
+                }).start();
+            });
+        }
+
         new Thread(() -> {
             VenueProfile profile = AppDatabase.getInstance(this)
                     .venueProfileDao().getProfileByUserId(targetUserId);
-
             runOnUiThread(() -> {
                 if (profile == null) {
                     if (isOwnProfile) {
                         startActivity(new Intent(this, EditVenueProfileActivity.class));
                         finish();
                     } else {
-                        android.widget.Toast.makeText(this, "Profile not found",
-                                android.widget.Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Profile not found", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     return;
@@ -73,16 +108,14 @@ public class ViewVenueProfileActivity extends AppCompatActivity {
         setText(R.id.tvFacebook,    p.facebookUrl);
 
         TextView tvCapacity = findViewById(R.id.tvCapacity);
-        if (tvCapacity != null) {
+        if (tvCapacity != null)
             tvCapacity.setText(p.capacity > 0 ? p.capacity + " people" : "—");
-        }
 
         TextView tvRating = findViewById(R.id.tvRating);
-        if (tvRating != null) {
+        if (tvRating != null)
             tvRating.setText(p.reviewCount > 0
                     ? String.format("%.1f ★  (%d reviews)", p.averageRating, p.reviewCount)
                     : "No reviews yet");
-        }
 
         setRowVisible(R.id.rowPhone,     p.phoneNumber);
         setRowVisible(R.id.rowWebsite,   p.websiteUrl);
@@ -90,14 +123,14 @@ public class ViewVenueProfileActivity extends AppCompatActivity {
         setRowVisible(R.id.rowFacebook,  p.facebookUrl);
     }
 
-    private void setText(int viewId, String value) {
-        TextView tv = findViewById(viewId);
+    private void setText(int id, String value) {
+        TextView tv = findViewById(id);
         if (tv != null) tv.setText(value != null && !value.isEmpty() ? value : "—");
     }
 
     private void setRowVisible(int rowId, String value) {
         View row = findViewById(rowId);
-        if (row != null) row.setVisibility(
-                value != null && !value.isEmpty() ? View.VISIBLE : View.GONE);
+        if (row != null)
+            row.setVisibility(value != null && !value.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

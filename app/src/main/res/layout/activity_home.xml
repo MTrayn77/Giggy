@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- C21361681 – Michael Traynor -->
-<!-- Home screen: consistent filled green buttons for all main actions -->
-<!-- Only "My Profile" uses the outlined style -->
+<!-- Home screen: Sprint 5 - Messages button added (shared by both roles) -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginBottom="8dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +22,6 @@
             android:textColor="@color/giggy_green"
             android:textSize="32sp"
             android:textStyle="bold"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,9 +31,7 @@
             android:textStyle="bold"/>
     </LinearLayout>
 
-    <!-- Username -->
-    <TextView
-        android:id="@+id/tvUsername"
+    <TextView android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/giggy_text"
@@ -44,30 +39,33 @@
         android:textStyle="bold"
         android:layout_marginBottom="4dp"/>
 
-    <!-- Role label -->
-    <TextView
-        android:id="@+id/tvRole"
+    <TextView android:id="@+id/tvRole"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/giggy_green"
         android:textSize="14sp"
         android:layout_marginBottom="24dp"/>
 
-    <!-- My Profile - outlined (different, as requested) -->
-    <Button
-        android:id="@+id/btnMyProfile"
+    <!-- My Profile - outlined -->
+    <Button android:id="@+id/btnMyProfile"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MY PROFILE"
         android:textColor="@color/giggy_green"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Messages - shared by both roles -->
+    <Button android:id="@+id/btnMessages"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="💬  MESSAGES"
+        android:textColor="@color/giggy_black"
+        android:background="@drawable/green_button"
         android:layout_marginBottom="24dp"/>
 
-    <!-- Main action buttons - all filled green (same style) -->
-
-    <!-- ARTIST buttons (shown/hidden in code) -->
-    <Button
-        android:id="@+id/btnBrowseGigs"
+    <!-- ARTIST buttons -->
+    <Button android:id="@+id/btnBrowseGigs"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="BROWSE GIGS"
@@ -76,8 +74,7 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/btnSearchArtists"
+    <Button android:id="@+id/btnSearchArtists"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="FIND VENUES"
@@ -86,8 +83,7 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/btnBookings"
+    <Button android:id="@+id/btnBookings"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="MY APPLICATIONS"
@@ -96,9 +92,8 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <!-- VENUE buttons (shown/hidden in code) -->
-    <Button
-        android:id="@+id/btnPostGig"
+    <!-- VENUE buttons -->
+    <Button android:id="@+id/btnPostGig"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="POST A GIG"
@@ -107,8 +102,7 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/btnFindArtists"
+    <Button android:id="@+id/btnFindArtists"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="FIND ARTISTS"
@@ -117,8 +111,7 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/btnVenueBookings"
+    <Button android:id="@+id/btnVenueBookings"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="BOOKING REQUESTS"
@@ -127,12 +120,12 @@
         android:layout_marginBottom="12dp"
         android:visibility="gone"/>
 
-    <!-- Spacer -->
-    <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-    <!-- Log out -->
-    <Button
-        android:id="@+id/btnLogout"
+    <Button android:id="@+id/btnLogout"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

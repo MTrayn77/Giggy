@@ -1,11 +1,10 @@
 // C21361681 – Michael Traynor
-// AppDatabase.java – Room database, version 4
-// Sprint 4: added bookings table
+// AppDatabase.java – Room database, version 5
+// Sprint 5: added messages table
 
 package com.fyp.giggy.data;
 
 import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -13,19 +12,21 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(
-        entities = {User.class, ArtistProfile.class, VenueProfile.class, GigListing.class, Booking.class},
-        version = 4,
+        entities = {User.class, ArtistProfile.class, VenueProfile.class,
+                GigListing.class, Booking.class, Message.class},
+        version = 5,
         exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
-    public abstract UserDao userDao();
+    public abstract UserDao         userDao();
     public abstract ArtistProfileDao artistProfileDao();
-    public abstract VenueProfileDao venueProfileDao();
-    public abstract GigListingDao gigListingDao();
-    public abstract BookingDao bookingDao();
+    public abstract VenueProfileDao  venueProfileDao();
+    public abstract GigListingDao    gigListingDao();
+    public abstract BookingDao       bookingDao();
+    public abstract MessageDao       messageDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -34,7 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             AppDatabase.class,
                             "giggy_db"
                     )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                     .build();
         }
         return instance;
@@ -56,7 +57,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    // Sprint 4: bookings table
     static final Migration MIGRATION_3_4 = new Migration(3, 4) {
         @Override public void migrate(SupportSQLiteDatabase db) {
             db.execSQL("CREATE TABLE IF NOT EXISTS bookings (" +
@@ -64,21 +64,35 @@ public abstract class AppDatabase extends RoomDatabase {
                     "gigId INTEGER NOT NULL," +
                     "artistUserId INTEGER NOT NULL," +
                     "venueUserId INTEGER NOT NULL," +
-                    "artistName TEXT," +
-                    "venueName TEXT," +
-                    "gigDate TEXT," +
-                    "gigTime TEXT," +
-                    "location TEXT," +
-                    "payAmount REAL NOT NULL DEFAULT 0," +
-                    "status TEXT," +
-                    "artistMessage TEXT," +
-                    "createdAt INTEGER NOT NULL DEFAULT 0," +
+                    "artistName TEXT, venueName TEXT, gigDate TEXT, gigTime TEXT," +
+                    "location TEXT, payAmount REAL NOT NULL DEFAULT 0," +
+                    "status TEXT, artistMessage TEXT, createdAt INTEGER NOT NULL DEFAULT 0," +
                     "FOREIGN KEY(artistUserId) REFERENCES users(id) ON DELETE CASCADE," +
                     "FOREIGN KEY(venueUserId) REFERENCES users(id) ON DELETE CASCADE," +
                     "FOREIGN KEY(gigId) REFERENCES gig_listings(id) ON DELETE CASCADE)");
             db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_artistUserId ON bookings(artistUserId)");
             db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_venueUserId ON bookings(venueUserId)");
             db.execSQL("CREATE INDEX IF NOT EXISTS index_bookings_gigId ON bookings(gigId)");
+        }
+    };
+
+    // Sprint 5: messages table
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override public void migrate(SupportSQLiteDatabase db) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS messages (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "bookingId INTEGER NOT NULL," +
+                    "senderId INTEGER NOT NULL," +
+                    "receiverId INTEGER NOT NULL," +
+                    "content TEXT," +
+                    "timestamp INTEGER NOT NULL DEFAULT 0," +
+                    "isRead INTEGER NOT NULL DEFAULT 0," +
+                    "FOREIGN KEY(senderId) REFERENCES users(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY(receiverId) REFERENCES users(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY(bookingId) REFERENCES bookings(id) ON DELETE CASCADE)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_bookingId ON messages(bookingId)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_senderId ON messages(senderId)");
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_receiverId ON messages(receiverId)");
         }
     };
 }

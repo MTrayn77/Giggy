@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- C21361681 – Michael Traynor -->
 <!-- Layout for viewing artist EPK profile -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Sprint 5: added btnMessageProfile -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,19 +21,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
-
-            <Button
-                android:id="@+id/btnBack"
+            <Button android:id="@+id/btnBack"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="← Back"
                 android:textColor="@color/giggy_hint"/>
-
             <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btnEditProfile"
+            <Button android:id="@+id/btnEditProfile"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,9 +37,7 @@
                 app:strokeColor="@color/giggy_green"/>
         </LinearLayout>
 
-        <!-- Stage Name -->
-        <TextView
-            android:id="@+id/tvStageName"
+        <TextView android:id="@+id/tvStageName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_text"
@@ -52,59 +45,47 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Genre & Act Type row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="4dp">
-
-            <TextView
-                android:id="@+id/tvGenre"
+            <TextView android:id="@+id/tvGenre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/giggy_green"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  ·  "
+                android:text=" · "
                 android:textColor="@color/giggy_hint"
                 android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/tvActType"
+            <TextView android:id="@+id/tvActType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/giggy_hint"
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <!-- Location -->
-        <TextView
-            android:id="@+id/tvLocation"
+        <TextView android:id="@+id/tvLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_hint"
             android:textSize="14sp"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Rating -->
-        <TextView
-            android:id="@+id/tvRating"
+        <TextView android:id="@+id/tvRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_green"
             android:textSize="14sp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Divider -->
         <View android:layout_width="match_parent" android:layout_height="1dp"
             android:background="#222222" android:layout_marginBottom="16dp"/>
 
-        <!-- Bio -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -115,8 +96,7 @@
             android:letterSpacing="0.1"
             android:layout_marginBottom="6dp"/>
 
-        <TextView
-            android:id="@+id/tvBio"
+        <TextView android:id="@+id/tvBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_text"
@@ -124,11 +104,9 @@
             android:lineSpacingExtra="4dp"
             android:layout_marginBottom="20dp"/>
 
-        <!-- Divider -->
         <View android:layout_width="match_parent" android:layout_height="1dp"
             android:background="#222222" android:layout_marginBottom="16dp"/>
 
-        <!-- Social Links section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +117,6 @@
             android:letterSpacing="0.1"
             android:layout_marginBottom="10dp"/>
 
-        <!-- Spotify row -->
         <LinearLayout android:id="@+id/rowSpotify"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -150,7 +127,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Instagram row -->
         <LinearLayout android:id="@+id/rowInstagram"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -161,7 +137,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Facebook row -->
         <LinearLayout android:id="@+id/rowFacebook"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -172,7 +147,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- YouTube row -->
         <LinearLayout android:id="@+id/rowYoutube"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -183,7 +157,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Website row -->
         <LinearLayout android:id="@+id/rowWebsite"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -193,6 +166,16 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
+
+        <!-- Sprint 5: Message button (hidden for own profile, shown for others) -->
+        <Button android:id="@+id/btnMessageProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="💬 Send Message"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </ScrollView>

@@ -43,6 +43,8 @@
         <activity android:name=".ui.VenueBookingsActivity"/>
         <activity android:name=".ui.BookingDetailActivity"/>
         <activity android:name=".ui.SearchVenuesActivity"/>
+        <activity android:name=".ui.ConversationActivity" />
+        <activity android:name=".ui.InboxActivity" />
 
     </application>
 </manifest>

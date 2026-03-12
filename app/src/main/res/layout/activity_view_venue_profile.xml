@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- C21361681 – Michael Traynor -->
 <!-- Layout for viewing venue profile -->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Sprint 5: added btnMessageProfile -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,25 +15,19 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Top bar: Back + Edit -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="16dp">
-
-            <Button
-                android:id="@+id/btnBack"
+            <Button android:id="@+id/btnBack"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="← Back"
                 android:textColor="@color/giggy_hint"/>
-
             <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btnEditProfile"
+            <Button android:id="@+id/btnEditProfile"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,9 +36,7 @@
                 app:strokeColor="@color/giggy_green"/>
         </LinearLayout>
 
-        <!-- Venue Name -->
-        <TextView
-            android:id="@+id/tvVenueName"
+        <TextView android:id="@+id/tvVenueName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_text"
@@ -52,9 +44,7 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Venue Type -->
-        <TextView
-            android:id="@+id/tvVenueType"
+        <TextView android:id="@+id/tvVenueType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_green"
@@ -62,38 +52,30 @@
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Location -->
-        <TextView
-            android:id="@+id/tvLocation"
+        <TextView android:id="@+id/tvLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_hint"
             android:textSize="14sp"
             android:layout_marginBottom="4dp"/>
 
-        <!-- Capacity -->
-        <TextView
-            android:id="@+id/tvCapacity"
+        <TextView android:id="@+id/tvCapacity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_hint"
             android:textSize="14sp"
             android:layout_marginBottom="8dp"/>
 
-        <!-- Rating -->
-        <TextView
-            android:id="@+id/tvRating"
+        <TextView android:id="@+id/tvRating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_green"
             android:textSize="14sp"
             android:layout_marginBottom="16dp"/>
 
-        <!-- Divider -->
         <View android:layout_width="match_parent" android:layout_height="1dp"
             android:background="#222222" android:layout_marginBottom="16dp"/>
 
-        <!-- Description -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,8 +86,7 @@
             android:letterSpacing="0.1"
             android:layout_marginBottom="6dp"/>
 
-        <TextView
-            android:id="@+id/tvDescription"
+        <TextView android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/giggy_text"
@@ -113,11 +94,9 @@
             android:lineSpacingExtra="4dp"
             android:layout_marginBottom="20dp"/>
 
-        <!-- Divider -->
         <View android:layout_width="match_parent" android:layout_height="1dp"
             android:background="#222222" android:layout_marginBottom="16dp"/>
 
-        <!-- Contact & Links -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,7 +107,6 @@
             android:letterSpacing="0.1"
             android:layout_marginBottom="10dp"/>
 
-        <!-- Phone row -->
         <LinearLayout android:id="@+id/rowPhone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -139,7 +117,6 @@
                 android:textColor="@color/giggy_text" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Website row -->
         <LinearLayout android:id="@+id/rowWebsite"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -150,7 +127,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Instagram row -->
         <LinearLayout android:id="@+id/rowInstagram"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -161,7 +137,6 @@
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
 
-        <!-- Facebook row -->
         <LinearLayout android:id="@+id/rowFacebook"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="8dp">
@@ -171,6 +146,16 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textColor="@color/giggy_green" android:textSize="13sp"/>
         </LinearLayout>
+
+        <!-- Sprint 5: Message button (hidden for own profile, shown for others) -->
+        <Button android:id="@+id/btnMessageProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="💬 Send Message"
+            android:textColor="@color/giggy_black"
+            android:background="@drawable/green_button"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </ScrollView>
